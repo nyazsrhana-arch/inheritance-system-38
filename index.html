@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="حاسبة المواريث الشرعية - حساب دقيق للأنصبة الشرعية وفقاً للشريعة الإسلامية">
+    <meta name="keywords" content="مواريث، إرث، فرائض، حساب الإرث، الشريعة الإسلامية، تقسيم التركة">
+    <meta name="author" content="حاسبة المواريث">
+    <title>حاسبة المواريث الشرعية</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/worth.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-balance-scale"></i>
+                    <h1>حاسبة المواريث الشرعية</h1>
+                </div>
+                <div class="header-actions">
+                    <select id="languageSelect" class="language-select">
+                        <option value="ar" selected>العربية</option>
+                        <option value="en">English</option>
+                        <option value="ur">اردو</option>
+                    </select>
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <nav class="tabs-container">
+            <div class="tabs-wrapper">
+                <button class="tab-btn active" data-tab="deceased">
+                    <span class="tab-number">1</span>
+                    <span class="tab-text">بيانات المتوفى</span>
+                </button>
+                <button class="tab-btn" data-tab="heirs">
+                    <span class="tab-number">2</span>
+                    <span class="tab-text">بيانات الورثة</span>
+                </button>
+                <button class="tab-btn" data-tab="results">
+                    <span class="tab-number">3</span>
+                    <span class="tab-text">النتائج</span>
+                </button>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <!-- التبويب الأول: بيانات المتوفى -->
+            <section class="tab-content active" id="deceasedTab">
+                <div class="section-header">
+                    <h2><i class="fas fa-user"></i> معلومات المتوفى</h2>
+                    <p class="section-desc">أدخل البيانات الأساسية للمتوفى</p>
+                </div>
+
+                <form class="form-grid" id="deceasedForm">
+                    <div class="form-group full-width">
+                        <label for="deceasedName">
+                            <i class="fas fa-user-tag"></i>
+                            اسم المتوفى
+                        </label>
+                        <input type="text" id="deceasedName" class="form-input" placeholder="أدخل اسم المتوفى" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-venus-mars"></i> الجنس</label>
+                        <div class="radio-group">
+                            <label class="radio-card">
+                                <input type="radio" name="gender" value="male" checked>
+                                <span class="radio-content">
+                                    <i class="fas fa-male"></i>
+                                    <span>ذكر</span>
+                                </span>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="gender" value="female">
+                                <span class="radio-content">
+                                    <i class="fas fa-female"></i>
+                                    <span>أنثى</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-mosque"></i> الديانة</label>
+                        <div class="radio-group">
+                            <label class="radio-card muslim">
+                                <input type="radio" name="deceasedReligion" value="muslim" checked>
+                                <span class="radio-content">
+                                    <i class="fas fa-star-and-crescent"></i>
+                                    <span>مسلم</span>
+                                </span>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="deceasedReligion" value="non-muslim">
+                                <span class="radio-content">
+                                    <i class="fas fa-user"></i>
+                                    <span>غير مسلم</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="totalAmount"><i class="fas fa-money-bill-wave"></i> المبلغ الإجمالي</label>
+                        <div class="input-with-icon">
+                            <input type="number" id="totalAmount" class="form-input" placeholder="0.00" min="0" step="0.01">
+                            <span class="input-suffix">ر.س</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="totalArea"><i class="fas fa-ruler-combined"></i> المساحة الإجمالية</label>
+                        <div class="input-with-icon">
+                            <input type="number" id="totalArea" class="form-input" placeholder="0.00" min="0" step="0.01">
+                            <span class="input-suffix">م²</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="debts"><i class="fas fa-hand-holding-usd"></i> الديون</label>
+                        <div class="input-with-icon">
+                            <input type="number" id="debts" class="form-input" placeholder="0.00" min="0" step="0.01" value="0">
+                            <span class="input-suffix">ر.س</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bequest">
+                            <i class="fas fa-scroll"></i> الوصية
+                            <small class="label-hint">(بحد أقصى الثلث)</small>
+                        </label>
+                        <div class="input-with-icon">
+                            <input type="number" id="bequest" class="form-input" placeholder="0.00" min="0" step="0.01" value="0">
+                            <span class="input-suffix">ر.س</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <div class="net-amount-box">
+                            <div class="net-amount-label">
+                                <i class="fas fa-calculator"></i>
+                                <span>صافي التركة</span>
+                            </div>
+                            <div class="net-amount-value" id="netAmount">0.00 ر.س</div>
+                        </div>
+                    </div>
+                </form>
+            </section>
+
+            <!-- التبويب الثاني: بيانات الورثة -->
+            <section class="tab-content" id="heirsTab">
+                <div class="section-header">
+                    <h2><i class="fas fa-users"></i> تحديد الورثة</h2>
+                    <p class="section-desc">اختر الورثة وأدخل بياناتهم</p>
+                </div>
+
+                <div class="heirs-summary">
+                    <div class="summary-item">
+                        <span class="summary-label">إجمالي الورثة:</span>
+                        <span class="summary-value" id="totalHeirsCount">0</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">المستحقون:</span>
+                        <span class="summary-value" id="eligibleHeirsCount">0</span>
+                    </div>
+                </div>
+
+                <div class="heirs-categories">
+                    <!-- الزوج/الزوجة -->
+                    <div class="heir-category">
+                        <div class="category-header">
+                            <div class="category-title">
+                                <i class="fas fa-ring"></i>
+                                <span>الزوج / الزوجة</span>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="hasSpouse">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="category-content" id="spouseContent">
+                            <div class="spouse-selector" id="spouseSelector"></div>
+                            <div class="heirs-list" id="spouseList"></div>
+                        </div>
+                    </div>
+
+                    <!-- الأب والأم -->
+                    <div class="heir-category">
+                        <div class="category-header">
+                            <div class="category-title">
+                                <i class="fas fa-user-friends"></i>
+                                <span>الأب والأم</span>
+                            </div>
+                        </div>
+                        <div class="category-content expanded">
+                            <div class="parents-grid">
+                                <div class="parent-card">
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" id="hasFather">
+                                        <span class="checkmark"></span>
+                                        <span class="checkbox-label">
+                                            <i class="fas fa-male"></i> الأب
+                                        </span>
+                                    </label>
+                                    <div class="parent-details" id="fatherDetails">
+                                        <input type="text" class="form-input" id="fatherName" placeholder="اسم الأب">
+                                        <div class="religion-toggle">
+                                            <label class="radio-mini">
+                                                <input type="radio" name="fatherReligion" value="muslim" checked>
+                                                <span>مسلم</span>
+                                            </label>
+                                            <label class="radio-mini">
+                                                <input type="radio" name="fatherReligion" value="non-muslim">
+                                                <span>غير مسلم</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="parent-card">
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" id="hasMother">
+                                        <span class="checkmark"></span>
+                                        <span class="checkbox-label">
+                                            <i class="fas fa-female"></i> الأم
+                                        </span>
+                                    </label>
+                                    <div class="parent-details" id="motherDetails">
+                                        <input type="text" class="form-input" id="motherName" placeholder="اسم الأم">
+                                        <div class="religion-toggle">
+                                            <label class="radio-mini">
+                                                <input type="radio" name="motherReligion" value="muslim" checked>
+                                                <span>مسلمة</span>
+                                            </label>
+                                            <label class="radio-mini">
+                                                <input type="radio" name="motherReligion" value="non-muslim">
+                                                <span>غير مسلمة</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- الأبناء والبنات -->
+                    <div class="heir-category">
+                        <div class="category-header">
+                            <div class="category-title">
+                                <i class="fas fa-child"></i>
+                                <span>الأبناء والبنات</span>
+                            </div>
+                            <span class="category-counter" id="childrenCount">0</span>
+                        </div>
+                        <div class="category-content expanded">
+                            <div class="add-buttons">
+                                <button type="button" class="btn-add-heir" data-type="son">
+                                    <i class="fas fa-plus"></i> إضافة ابن
+                                </button>
+                                <button type="button" class="btn-add-heir" data-type="daughter">
+                                    <i class="fas fa-plus"></i> إضافة ابنة
+                                </button>
+                            </div>
+                            <div class="heirs-list" id="childrenList"></div>
+                        </div>
+                    </div>
+
+                    <!-- الأجداد والجدات -->
+                    <div class="heir-category">
+                        <div class="category-header collapsible">
+                            <div class="category-title">
+                                <i class="fas fa-users"></i>
+                                <span>الأجداد والجدات</span>
+                            </div>
+                            <i class="fas fa-chevron-down collapse-icon"></i>
+                        </div>
+                        <div class="category-content">
+                            <div class="parents-grid">
+                                <div class="parent-card">
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" id="hasGrandfather">
+                                        <span class="checkmark"></span>
+                                        <span class="checkbox-label">
+                                            <i class="fas fa-male"></i> الجد
+                                        </span>
+                                    </label>
+                                    <div class="parent-details" id="grandfatherDetails">
+                                        <input type="text" class="form-input" id="grandfatherName" placeholder="اسم الجد">
+                                    </div>
+                                </div>
+                                <div class="parent-card">
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" id="hasGrandmother">
+                                        <span class="checkmark"></span>
+                                        <span class="checkbox-label">
+                                            <i class="fas fa-female"></i> الجدة
+                                        </span>
+                                    </label>
+                                    <div class="parent-details" id="grandmotherDetails">
+                                        <input type="text" class="form-input" id="grandmotherName" placeholder="اسم الجدة">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- الإخوة والأخوات -->
+                    <div class="heir-category">
+                        <div class="category-header collapsible">
+                            <div class="category-title">
+                                <i class="fas fa-user-friends"></i>
+                                <span>الإخوة والأخوات</span>
+                            </div>
+                            <span class="category-counter" id="siblingsCount">0</span>
+                            <i class="fas fa-chevron-down collapse-icon"></i>
+                        </div>
+                        <div class="category-content">
+                            <div class="add-buttons">
+                                <button type="button" class="btn-add-heir" data-type="fullBrother">
+                                    <i class="fas fa-plus"></i> أخ شقيق
+                                </button>
+                                <button type="button" class="btn-add-heir" data-type="fullSister">
+                                    <i class="fas fa-plus"></i> أخت شقيقة
+                                </button>
+                                <button type="button" class="btn-add-heir" data-type="paternalBrother">
+                                    <i class="fas fa-plus"></i> أخ لأب
+                                </button>
+                                <button type="button" class="btn-add-heir" data-type="paternalSister">
+                                    <i class="fas fa-plus"></i> أخت لأب
+                                </button>
+                                <button type="button" class="btn-add-heir" data-type="maternalBrother">
+                                    <i class="fas fa-plus"></i> أخ لأم
+                                </button>
+                                <button type="button" class="btn-add-heir" data-type="maternalSister">
+                                    <i class="fas fa-plus"></i> أخت لأم
+                                </button>
+                            </div>
+                            <div class="heirs-list" id="siblingsList"></div>
+                        </div>
+                    </div>
+
+                    <!-- الأعمام وأبناؤهم -->
+                    <div class="heir-category">
+                        <div class="category-header collapsible">
+                            <div class="category-title">
+                                <i class="fas fa-users"></i>
+                                <span>الأعمام وأبناؤهم</span>
+                            </div>
+                            <span class="category-counter" id="unclesCount">0</span>
+                            <i class="fas fa-chevron-down collapse-icon"></i>
+                        </div>
+                        <div class="category-content">
+                            <div class="add-buttons">
+                                <button type="button" class="btn-add-heir" data-type="uncle">
+                                    <i class="fas fa-plus"></i> إضافة عم
+                                </button>
+                                <button type="button" class="btn-add-heir" data-type="cousinMale">
+                                    <i class="fas fa-plus"></i> إضافة ابن عم
+                                </button>
+                            </div>
+                            <div class="heirs-list" id="unclesList"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- التبويب الثالث: النتائج -->
+            <section class="tab-content" id="resultsTab">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-pie"></i> نتائج توزيع التركة</h2>
+                    <p class="section-desc">تفاصيل الأنصبة الشرعية لكل وريث</p>
+                </div>
+
+                <div class="estate-summary">
+                    <div class="summary-card">
+                        <div class="summary-icon"><i class="fas fa-money-bill-wave"></i></div>
+                        <div class="summary-info">
+                            <span class="summary-label">إجمالي التركة</span>
+                            <span class="summary-value" id="summaryTotal">0.00 ر.س</span>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon"><i class="fas fa-minus-circle"></i></div>
+                        <div class="summary-info">
+                            <span class="summary-label">الديون والوصية</span>
+                            <span class="summary-value" id="summaryDeductions">0.00 ر.س</span>
+                        </div>
+                    </div>
+                    <div class="summary-card primary">
+                        <div class="summary-icon"><i class="fas fa-wallet"></i></div>
+                        <div class="summary-info">
+                            <span class="summary-label">صافي التركة</span>
+                            <span class="summary-value" id="summaryNet">0.00 ر.س</span>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon"><i class="fas fa-ruler-combined"></i></div>
+                        <div class="summary-info">
+                            <span class="summary-label">المساحة</span>
+                            <span class="summary-value" id="summaryArea">0.00 م²</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="case-info">
+                    <div class="case-badge" id="caseBadge">
+                        <i class="fas fa-info-circle"></i>
+                        <span id="caseType">توزيع عادي</span>
+                    </div>
+                </div>
+
+                <div class="results-table-container">
+                    <table class="results-table" id="resultsTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>الوريث</th>
+                                <th>صلة القرابة</th>
+                                <th>النصيب الشرعي</th>
+                                <th>النسبة %</th>
+                                <th>المبلغ (ر.س)</th>
+                                <th>المساحة (م²)</th>
+                                <th>ملاحظات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultsBody"></tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4"><strong>الإجمالي</strong></td>
+                                <td id="totalPercentage">0%</td>
+                                <td id="totalAmountResult">0.00</td>
+                                <td id="totalAreaResult">0.00</td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div class="legal-notes" id="legalNotes">
+                    <h3><i class="fas fa-gavel"></i> ملاحظات شرعية</h3>
+                    <ul id="notesList"></ul>
+                </div>
+
+                <div class="results-actions">
+                    <button class="btn btn-secondary" id="btnNewCalculation">
+                        <i class="fas fa-redo"></i> حساب جديد
+                    </button>
+                    <button class="btn btn-primary" id="btnPrint">
+                        <i class="fas fa-print"></i> طباعة
+                    </button>
+                    <button class="btn btn-success" id="btnSave">
+                        <i class="fas fa-save"></i> حفظ
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <footer class="nav-footer">
+            <button class="btn btn-outline" id="btnPrev" disabled>
+                <i class="fas fa-arrow-right"></i> السابق
+            </button>
+            <button class="btn btn-primary" id="btnNext">
+                التالي <i class="fas fa-arrow-left"></i>
+            </button>
+        </footer>
+    </div>
+
+    <div class="modal" id="confirmModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">تأكيد</h3>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">هل أنت متأكد؟</div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="modalCancel">إلغاء</button>
+                <button class="btn btn-primary" id="modalConfirm">تأكيد</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="js/conditions.js"></script>
+    <script src="js/calculations.js"></script>
+    <script src="js/keysCalculator.js"></script>
+    <script src="js/functions.js"></script>
+    <script src="js/notes.js"></script>
+    <script src="js/translations.js"></script>
+    <script src="js/interactions.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/new_script.js"></script>
+</body>
+</html>
